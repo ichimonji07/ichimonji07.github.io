@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ååä¼ç¤¾moon | ç¾ã¨æ®ãããããã£ã¨è¿ãã«ã</title>
+<meta name="description" content="ååä¼ç¤¾moonã¯åæµ·éæ­å·å¸ãæ ç¹ã«ãã¨ã¹ããµã­ã³ã®çµå¶ã»éæ¥­ãµãã¼ããçµå¶ã³ã³ãµã«ãã£ã³ã°ãã¨ã¹ãç¨åã®è²©å£²ãå±éããä¼æ¥­ã§ãã">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0a0a0f;
+  --bg-card: #111118;
+  --bg-subtle: #16161f;
+  --text-primary: #e8e6e1;
+  --text-secondary: #9a9890;
+  --text-muted: #5a5850;
+  --accent: #c4a882;
+  --accent-light: #dcc8a8;
+  --accent-glow: rgba(196, 168, 130, 0.15);
+  --border: rgba(196, 168, 130, 0.12);
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+  --display: 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-weight: 300;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* âââ Noise overlay âââ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* âââ Navigation âââ */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  text-transform: lowercase;
+  color: var(--accent);
+}
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* âââ Hero âââ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196, 168, 130, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+}
+
+.hero-moon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  position: relative;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero-moon::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  top: -5px;
+  right: -15px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.5s forwards;
+}
+
+.hero-subtitle {
+  font-family: var(--display);
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.7s forwards;
+}
+
+.hero-tagline {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 2;
+  opacity: 0;
+  animation: fadeUp 1s 0.9s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* âââ Section base âââ */
+section {
+  padding: 8rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--display);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 300;
+  margin-bottom: 3rem;
+  letter-spacing: 0.05em;
+}
+
+.divider {
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: 3rem;
+}
+
+/* âââ About âââ */
+.about-text {
+  max-width: 700px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 2.2;
+}
+
+/* âââ Services âââ */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2.5rem 2rem;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.service-card:hover { border-color: rgba(196, 168, 130, 0.3); transform: translateY(-4px); }
+.service-card:hover::before { opacity: 1; }
+
+.service-num {
+  font-family: var(--display);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.service-name {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.service-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+
+/* âââ Company Info âââ */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table tr { border-bottom: 1px solid var(--border); }
+
+.info-table th {
+  text-align: left;
+  padding: 1.4rem 2rem 1.4rem 0;
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  white-space: nowrap;
+  width: 140px;
+  vertical-align: top;
+}
+
+.info-table td {
+  padding: 1.4rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+}
+
+/* âââ Contact âââ */
+.contact-section {
+  text-align: center;
+  padding: 8rem 3rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-email {
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 200;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  display: inline-block;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+
+.contact-email:hover { border-color: var(--accent); }
+
+.contact-note {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* âââ Footer âââ */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem;
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+/* âââ Responsive âââ */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { gap: 1.5rem; }
+  .nav-links a { font-size: 0.65rem; }
+  section { padding: 5rem 1.5rem; }
+  .contact-section { padding: 5rem 1.5rem; }
+  .info-table th { display: block; padding-bottom: 0.2rem; }
+  .info-table td { display: block; padding-top: 0.2rem; padding-bottom: 1.4rem; }
+}
+
+@media (max-width: 480px) {
+  .nav-links { display: none; }
+  .hero-moon { width: 80px; height: 80px; }
+  .hero-moon::after { width: 65px; height: 65px; top: -3px; right: -10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">moon</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#company">Company</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-moon"></div>
+  <h1 class="hero-title">ååä¼ç¤¾ moon</h1>
+  <p class="hero-subtitle">Beauty &amp; Consulting Company</p>
+  <p class="hero-tagline">
+    ç¾ã¨æ®ãããããã£ã¨è¿ãã«ã<br>
+    åæµ·éæ­å·å¸ãæ ç¹ã«ãã¨ã¹ããµã­ã³çµå¶ãã<br>
+    éæ¥­æ¯æ´ã»çµå¶ã³ã³ãµã«ãã£ã³ã°ã¾ã§ã
+  </p>
+</section>
+
+<!-- About -->
+<section id="about">
+  <p class="section-label">About Us</p>
+  <h2 class="section-title">ããããã¡ã«ã¤ãã¦</h2>
+  <div class="divider"></div>
+  <p class="about-text">
+    ååä¼ç¤¾moonã¯ã2026å¹´3æã«åæµ·éæ­å·å¸ã§è¨­ç«ããã¾ããã
+    ã¨ã¹ããµã­ã³ã®çµåããã³éæ¥­æ¯æ´ãä¸­å¿ã«ããµã­ã³çµåã®å¹çåãå®ç¾ããã³ã³ãµã«ãã£ã³ã°ã
+    ã¨ã¹ãç¨åã®è²©å£²ãªã©ãç¾å®¹æ¥­çã«ç¹åããäºæ¥­ãå±éãã¦ãã¾ãã<br><br>
+    ãç¾ã¨æ®ãããããã£ã¨è¿ãã«ããã¨ããçå¿µã®ãã¨ã
+    ãå®¢æ§ä¸äººã²ã¨ãã®ç¾ãããå¼ãåºããµã¼ãã¹ã¨ã
+    ãµã­ã³ãªã¼ãã¼æ§ã®æåãæ¯ãããµãã¼ããæä¾ãã¦ã¾ããã¾ãã
+  </p>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <p class="section-label">Services</p>
+  <h2 class="section-title">äºæ¥­åå®¹</h2>
+  <div class="divider"></div>
+  <div class="services-grid">
+    <div class="service-card">
+      <p class="service-num">01</p>
+      <h3 class="service-name">ã¨ã¹ããµã­ã³çµå¶ã»éæ¥­ãµãã¼ã</h3>
+      <p class="service-desc">
+        ã¨ã¹ããµã­ã³ã®çµå¶ãè¡ãã¨ã¨ãã«ãæ°è¦éæ¥­ãç®æããªã¼ãã¼æ§ã¸ã®éæ¥­æ¯æ´ã»éå¶ãµãã¼ããæä¾ãã¦ãã¾ããåºèè¨­è¨ããéå®¢æ¦ç¥ã¾ã§ããã¼ã¿ã«ã§ãæä¼ããã¾ãã
+      </p>
+    </div>
+    <div class="service-card">
+      <p class="service-num">02</p>
+      <h3 class="service-name">çµå¶ã³ã³ãµã«ãã£ã³ã°</h3>
+      <p class="service-desc">
+        ITãã¼ã«ããã¸ã¿ã«æè¡ãæ´»ç¨ãããµã­ã³çµå¶ã®å¹çåã»å£²ä¸åä¸ãæ¯æ´ããã³ã³ãµã«ãã£ã³ã°ãµã¼ãã¹ãæä¾ãã¦ãã¾ããäºç´ç®¡çã»é¡§å®¢ç®¡çã»ãã¼ã±ãã£ã³ã°ã®æé©åããµãã¼ããã¾ãã
+      </p>
+    </div>
+    <div class="service-card">
+      <p class="service-num">03</p>
+      <h3 class="service-name">ã¨ã¹ãç¨åè²©å£²</h3>
+      <p class="service-desc">
+        ãã­ãã§ãã·ã§ãã«åãã®ã¨ã¹ãæ©å¨ã»åç²§åã»æ¶èåãªã©ããµã­ã³éå¶ã«å¿è¦ãªåç¨®ã¨ã¹ãç¨åã®è²©å£²ãè¡ã£ã¦ãã¾ããåè³ªã«ãã ãã£ãå³é¸ã¢ã¤ãã ããå±ããã¾ãã
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Company Info -->
+<section id="company">
+  <p class="section-label">Company</p>
+  <h2 class="section-title">ä¼ç¤¾æ¦è¦</h2>
+  <div class="divider"></div>
+  <table class="info-table">
+    <tr>
+      <th>åå·</th>
+      <td>ååä¼ç¤¾moon</td>
+    </tr>
+    <tr>
+      <th>æå¨å°</th>
+      <td>ã070-0027<br>åæµ·éæ­å·å¸æ±ä¸æ¡ä¹ä¸ç®1çª23å· ãã¼ã¯æ±7æ¡B202</td>
+    </tr>
+    <tr>
+      <th>ä»£è¡¨è</th>
+      <td>ä»£è¡¨ç¤¾å¡ãåå¤ å©å¥</td>
+    </tr>
+    <tr>
+      <th>è¨­ç«</th>
+      <td>2026å¹´ï¼ä»¤å8å¹´ï¼3æ13æ¥</td>
+    </tr>
+    <tr>
+      <th>è³æ¬é</th>
+      <td>100,000å</td>
+    </tr>
+    <tr>
+      <th>äºæ¥­åå®¹</th>
+      <td>
+        ã¨ã¹ããµã­ã³ã®çµå¶ããã³éæ¥­æ¯æ´<br>
+        ITãæ´»ç¨ããçµå¶ã³ã³ãµã«ãã£ã³ã°<br>
+        ã¨ã¹ãç¨åã®è²©å£²<br>
+        ä¸è¨ã«éå¸¯é¢é£ããä¸åã®äºæ¥­
+      </td>
+    </tr>
+    <tr>
+      <th>æ³äººçªå·</th>
+      <td>4500-03-002794</td>
+    </tr>
+    <tr>
+      <th>é»è©±çªå·</th>
+      <td>050-3649-2836</td>
+    </tr>
+  </table>
+</section>
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+  <p class="section-label">Contact</p>
+  <h2 class="section-title">ãåãåãã</h2>
+  <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+  <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:2rem; line-height:2;">
+    äºæ¥­ã«é¢ãããåãåããããç¸è«ã¯<br>ä¸è¨ã¡ã¼ã«ã¢ãã¬ã¹ãããé£çµ¡ãã ããã
+  </p>
+  <a href="mailto:as.moon.coltd@gmail.com" class="contact-email">as.moon.coltd@gmail.com</a>
+  <p style="margin-top:1rem; font-size:0.95rem; color:var(--text-secondary);">TEL: <a href="tel:050-3649-2836" style="color:var(--accent-light);">050-3649-2836</a></p>
+  <p class="contact-note">â» å¶æ¥­æéåï¼å¹³æ¥ 10:00ã18:00ï¼ã«é æ¬¡å¯¾å¿ãããã¾ãã</p>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2026 ååä¼ç¤¾moon. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
